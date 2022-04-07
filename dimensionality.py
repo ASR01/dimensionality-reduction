@@ -11,14 +11,13 @@ from tensorflow.keras.layers import Dense
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#Sonar data()
-#file = 'sonar.all-data'
-#breast cancer data
-file = 'breast-cancer.csv'
+#Select sonar or breast-cancer data unselect your selection
+
+file = 'sonar.all-data'
+#file = 'breast-cancer.csv'
 
 #Load the data
 df = pd.read_csv('./data/' + str(file))
-#df = pd.read_csv('./data/breast-cancer.csv')
 
 
 
@@ -161,24 +160,25 @@ history_2, result_2 = create_train_model(x_tsvd.shape[1], x_train, y_train, x_te
 
 # Final Graphs
 
+fig, (ax1, ax2) = plt.subplots(1,2)
 
-plt.plot(history.history['accuracy'])
-plt.plot(history_1.history['accuracy'])
-plt.plot(history_2.history['accuracy'])
-plt.title('Model Training accuracy file:' + file )
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
-plt.show()
+ax1.plot(history.history['accuracy'])
+ax1.plot(history_1.history['accuracy'])
+ax1.plot(history_2.history['accuracy'])
+ax1.set_title('Model Training accuracy file:' + file )
+ax1.set_ylabel('Accuracy')
+ax1.set_xlabel('Epoch')
+ax1.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
 
 
-plt.plot(history.history['val_accuracy'])
-plt.plot(history_1.history['val_accuracy'])
-plt.plot(history_2.history['val_accuracy'])
-plt.title('Model validation accuracy file:' + file)
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+ax2.plot(history.history['val_accuracy'])
+ax2.plot(history_1.history['val_accuracy'])
+ax2.plot(history_2.history['val_accuracy'])
+ax2.set_title('Model validation accuracy file:' + file)
+ax2.set_ylabel('Accuracy')
+ax2.set_xlabel('Epoch')
+ax2.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+
 plt.show()
 
 
