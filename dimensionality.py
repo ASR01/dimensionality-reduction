@@ -11,13 +11,14 @@ from tensorflow.keras.layers import Dense
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#Select sonar or breast-cancer data unselect your selection
-
+#Sonar data()
 file = 'sonar.all-data'
+#breast cancer data
 #file = 'breast-cancer.csv'
 
 #Load the data
 df = pd.read_csv('./data/' + str(file))
+#df = pd.read_csv('./data/breast-cancer.csv')
 
 
 
@@ -93,8 +94,8 @@ def create_train_model(features, x_train, y_train, x_test, y_test, epochs):
 ############################## Variables  ##################################
 
 
-Threshold = 0.8 #Variance kept in dimensionality reduction
-epochs = 70
+Threshold = 0.9 #Variance kept in dimensionality reduction
+epochs = 50
 val_split = 0.2
 
 # No dimensionality reductionor
@@ -135,7 +136,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_PCA, y, train_size=0.8, ra
 
 history_1, result_1 = create_train_model(x_PCA.shape[1], x_train, y_train, x_test, y_test, epochs)
 
-# SGD reduction
+# SVD reduction
 
 org_dim = x.shape[1]
 tsvd = TruncatedSVD(org_dim - 1)
@@ -160,25 +161,24 @@ history_2, result_2 = create_train_model(x_tsvd.shape[1], x_train, y_train, x_te
 
 # Final Graphs
 
-fig, (ax1, ax2) = plt.subplots(1,2)
 
-ax1.plot(history.history['accuracy'])
-ax1.plot(history_1.history['accuracy'])
-ax1.plot(history_2.history['accuracy'])
-ax1.set_title('Model Training accuracy file:' + file )
-ax1.set_ylabel('Accuracy')
-ax1.set_xlabel('Epoch')
-ax1.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+plt.plot(history.history['accuracy'])
+plt.plot(history_1.history['accuracy'])
+plt.plot(history_2.history['accuracy'])
+plt.title('Model Training accuracy file:' + file )
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 90% ' + str(dim_PCA) + ' feat.'), str('SVD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+plt.show()
 
 
-ax2.plot(history.history['val_accuracy'])
-ax2.plot(history_1.history['val_accuracy'])
-ax2.plot(history_2.history['val_accuracy'])
-ax2.set_title('Model validation accuracy file:' + file)
-ax2.set_ylabel('Accuracy')
-ax2.set_xlabel('Epoch')
-ax2.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
-
+plt.plot(history.history['val_accuracy'])
+plt.plot(history_1.history['val_accuracy'])
+plt.plot(history_2.history['val_accuracy'])
+plt.title('Model validation accuracy file:' + file)
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SVD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
 plt.show()
 
 
