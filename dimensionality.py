@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #Sonar data()
-file = 'sonar.all-data'
+#file = 'sonar.all-data'
 #breast cancer data
-#file = 'breast-cancer.csv'
+file = 'breast-cancer.csv'
 
 #Load the data
 df = pd.read_csv('./data/' + str(file))
@@ -95,7 +95,7 @@ def create_train_model(features, x_train, y_train, x_test, y_test, epochs):
 
 
 Threshold = 0.8 #Variance kept in dimensionality reduction
-epochs = 50
+epochs = 70
 val_split = 0.2
 
 # No dimensionality reductionor
@@ -168,8 +168,7 @@ plt.plot(history_2.history['accuracy'])
 plt.title('Model Training accuracy file:' + file )
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-#plt.legend(['Original', 'PCA 90%'], loc='upper left')
-plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 90% ' + str(dim_PCA) + ' feat.'), str('SGD 90% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
 plt.show()
 
 
@@ -179,7 +178,7 @@ plt.plot(history_2.history['val_accuracy'])
 plt.title('Model validation accuracy file:' + file)
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 90% ' + str(dim_PCA) + ' feat.'), str('SGD 90% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
+plt.legend([str('Original ' + str(orig_feat) + ' feat.') , str('PCA 80% ' + str(dim_PCA) + ' feat.'), str('SGD 80% ' + str(dim_sgd) + ' feat.' )], loc='lower right')
 plt.show()
 
 
